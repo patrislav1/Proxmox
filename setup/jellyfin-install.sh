@@ -85,8 +85,9 @@ if [[ -z "$(grep -w "100000" /proc/self/uid_map)" ]]; then
   msg_info "Setting Up Hardware Acceleration"
   apt-get -y install \
     va-driver-all \
-    ocl-icd-libopencl1 \
-    beignet-opencl-icd &>/dev/null
+    ocl-icd-libopencl1 &>/dev/null
+  # Don't abort if beignet-opencl-icd not available (Ubuntu 22.04)
+  apt-get -y install beignet-opencl-icd || true
 
   /bin/chgrp video /dev/dri
   /bin/chmod 755 /dev/dri
